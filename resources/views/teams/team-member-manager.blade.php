@@ -2,15 +2,15 @@
     @if (Gate::check('addTeamMember', $team))
         <x-jet-section-border />
 
-        <!-- Add Team Member -->
+        <!-- Add Workspace Member -->
         <div class="mt-10 sm:mt-0">
             <x-jet-form-section submit="addTeamMember">
                 <x-slot name="title">
-                    {{ __('Add Team Member') }}
+                    {{ __('Add Workspace Member') }}
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('Add a new team member to your team, allowing them to collaborate with you.') }}
+                    {{ __('Add a new workspace member to your workspace, allowing them to collaborate with you.') }}
                 </x-slot>
 
                 <x-slot name="form">
@@ -79,15 +79,15 @@
     @if ($team->teamInvitations->isNotEmpty() && Gate::check('addTeamMember', $team))
         <x-jet-section-border />
 
-        <!-- Team Member Invitations -->
+        <!-- Workspace Member Invitations -->
         <div class="mt-10 sm:mt-0">
             <x-jet-action-section>
                 <x-slot name="title">
-                    {{ __('Pending Team Invitations') }}
+                    {{ __('Pending Workspace Invitations') }}
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.') }}
+                    {{ __('These people have been invited to your workspace and have been sent an invitation email. They may join the workspace by accepting the email invitation.') }}
                 </x-slot>
 
                 <x-slot name="content">
@@ -116,18 +116,18 @@
     @if ($team->users->isNotEmpty())
         <x-jet-section-border />
 
-        <!-- Manage Team Members -->
+        <!-- Manage Workspace Members -->
         <div class="mt-10 sm:mt-0">
             <x-jet-action-section>
                 <x-slot name="title">
-                    {{ __('Team Members') }}
+                    {{ __('Workspace Members') }}
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('All of the people that are part of this team.') }}
+                    {{ __('All of the people that are part of this workspace.') }}
                 </x-slot>
 
-                <!-- Team Member List -->
+                <!-- Workspace Member List -->
                 <x-slot name="content">
                     <div class="space-y-6">
                         @foreach ($team->users->sortBy('name') as $user)
@@ -216,14 +216,14 @@
         </x-slot>
     </x-jet-dialog-modal>
 
-    <!-- Leave Team Confirmation Modal -->
+    <!-- Leave Workspace Confirmation Modal -->
     <x-jet-confirmation-modal wire:model="confirmingLeavingTeam">
         <x-slot name="title">
-            {{ __('Leave Team') }}
+            {{ __('Leave Workspace') }}
         </x-slot>
 
         <x-slot name="content">
-            {{ __('Are you sure you would like to leave this team?') }}
+            {{ __('Are you sure you would like to leave this workspace?') }}
         </x-slot>
 
         <x-slot name="footer">
@@ -237,14 +237,14 @@
         </x-slot>
     </x-jet-confirmation-modal>
 
-    <!-- Remove Team Member Confirmation Modal -->
+    <!-- Remove Workspace Member Confirmation Modal -->
     <x-jet-confirmation-modal wire:model="confirmingTeamMemberRemoval">
         <x-slot name="title">
-            {{ __('Remove Team Member') }}
+            {{ __('Remove Workspace Member') }}
         </x-slot>
 
         <x-slot name="content">
-            {{ __('Are you sure you would like to remove this person from the team?') }}
+            {{ __('Are you sure you would like to remove this person from the workspace?') }}
         </x-slot>
 
         <x-slot name="footer">
