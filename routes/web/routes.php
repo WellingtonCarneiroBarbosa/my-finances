@@ -8,4 +8,6 @@ Route::middleware([
     'verified',
 ])->name('dashboard.')->group(function () {
     require __DIR__ . '/incomes/routes.php';
+
+    require __DIR__ . '/expenses/routes.php';
 });

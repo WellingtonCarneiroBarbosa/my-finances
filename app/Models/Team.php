@@ -35,6 +35,8 @@ use Laravel\Jetstream\Team as JetstreamTeam;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Income[] $incomes
  * @property-read int|null $incomes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Expenses\Category[] $categories
+ * @property-read int|null $categories_count
  */
 class Team extends JetstreamTeam
 {

@@ -41,6 +41,6 @@ class CreateController extends Controller
                     ->incomes()
                     ->create($data);
 
-        return redirect()->route('incomes.show', $income);
+        return redirect()->route('dashboard.incomes.show', $income);
     }
 }

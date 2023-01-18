@@ -9,6 +9,35 @@
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  */
 
+namespace App\Models\Expenses{
+    /**
+     * App\Models\Expenses\Category
+     *
+     * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Category query()
+     * @mixin \Eloquent
+     * @property-read Team|null $workspace
+     * @property int $id
+     * @property string $name
+     * @property string|null $description
+     * @property string $color
+     * @property int $team_id
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @method static \Illuminate\Database\Eloquent\Builder|Category whereColor($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Category whereDescription($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Category whereTeamId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
+     */
+    class Category extends \Eloquent
+    {
+    }
+}
+
 namespace App\Models{
     /**
      * App\Models\Income
@@ -98,6 +127,8 @@ namespace App\Models{
      * @mixin \Eloquent
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Income[] $incomes
      * @property-read int|null $incomes_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Expenses\Category[] $categories
+     * @property-read int|null $categories_count
      */
     class Team extends \Eloquent
     {
