@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
@@ -8,6 +9,9 @@ import TextInput from "@/Components/TextInput.vue";
 import TextArea from "@/Components/TextArea.vue";
 import ToggleInput from "@/Components/ToggleInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import DialogModal from "@/Components/DialogModal.vue";
+import CreateCategoryForm from "../Categories/Partials/CreateCategoryForm.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const props = defineProps({
     recurringPeriods: {
@@ -34,6 +38,21 @@ const registerExpense = () => {
         errorBag: "registerExpense",
         preserveScroll: true,
     });
+};
+
+const creatingCategory = ref(false);
+
+const closeCreateCategoryModal = () => {
+    creatingCategory.value = false;
+};
+
+const openCreateCategoryModal = () => {
+    creatingCategory.value = true;
+};
+
+const handleCategoryCreated = () => {
+    closeCreateCategoryModal();
+    form.reset("category");
 };
 </script>
 
@@ -83,7 +102,10 @@ const registerExpense = () => {
                         class="block w-full mt-1"
                         :options="categories"
                     />
-                    <PrimaryButton type="button" class="ml-2"
+                    <PrimaryButton
+                        type="button"
+                        class="ml-2"
+                        @click="openCreateCategoryModal"
                         >Adicionar Categoria
                     </PrimaryButton>
                 </div>
@@ -153,4 +175,26 @@ const registerExpense = () => {
             </PrimaryButton>
         </template>
     </FormSection>
+
+    <!-- Create Category Modal-->
+    <DialogModal
+        max-width="6xl"
+        :show="creatingCategory"
+        @close="closeCreateCategoryModal"
+    >
+        <template #title> Adicionar Categoria </template>
+
+        <template #content>
+            <CreateCategoryForm
+                :should-redirect="false"
+                @created="handleCategoryCreated"
+            />
+        </template>
+
+        <template #footer>
+            <SecondaryButton @click="closeCreateCategoryModal">
+                Cancelar
+            </SecondaryButton>
+        </template>
+    </DialogModal>
 </template>

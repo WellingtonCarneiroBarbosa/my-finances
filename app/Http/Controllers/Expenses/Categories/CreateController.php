@@ -34,6 +34,12 @@ class CreateController extends Controller
 
         $category->save();
 
-        return redirect()->route('dashboard.expenses.categories.index');
+        if ($request->should_redirect) {
+            return redirect()->route('dashboard.expenses.categories.create');
+        }
+
+        return redirect()->back()->with([
+            'category' => $category,
+        ]);
     }
 }

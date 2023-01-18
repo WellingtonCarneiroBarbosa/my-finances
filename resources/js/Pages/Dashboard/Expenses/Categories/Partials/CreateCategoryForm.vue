@@ -7,17 +7,35 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import TextArea from "@/Components/TextArea.vue";
 
+const props = defineProps({
+    shouldRedirect: {
+        type: Boolean,
+        default: true,
+    },
+});
+
+const emit = defineEmits(["created"]);
+
 const form = useForm({
     name: "",
     description: "",
     color: "#fff",
+    should_redirect: props.shouldRedirect,
 });
 
 const createCategory = () => {
     form.post(route("dashboard.expenses.categories.store"), {
         errorBag: "createCategory",
         preserveScroll: true,
+        onSuccess: (response) => {
+            form.reset("name", "description", "color");
+            created(response.props.data);
+        },
     });
+};
+
+const created = (data) => {
+    emit("created", data);
 };
 </script>
 
