@@ -16,7 +16,7 @@ return new class () extends Migration {
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('amount');
             $table->date('date');
             $table->boolean('is_recurring')->default(false);

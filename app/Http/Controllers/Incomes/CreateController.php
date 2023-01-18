@@ -4,16 +4,28 @@ namespace App\Http\Controllers\Incomes;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class CreateController extends Controller
 {
     public function __invoke(Request $request)
     {
-        return Inertia::render('Incomes/Create');
+        $recurringPeriods = \App\Models\Income::RECURRING_INTERVALS;
+
+        $periods = collect($recurringPeriods)->map(function ($value, $key) {
+            return [
+                'label'    => Str::ucfirst($key),
+                'value'    => $key,
+            ];
+        });
+
+        return Inertia::render('Dashboard/Incomes/Create', [
+            'recurringPeriods' => $periods,
+        ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $data = $this->validate(request(), [
             'name'               => 'required|string',
@@ -24,7 +36,10 @@ class CreateController extends Controller
             'recurring_interval' => 'required|integer',
         ]);
 
-        $income = auth()->user()->incomes()->create($data);
+        $income = $request->currentUser()
+                    ->currentTeam()
+                    ->incomes()
+                    ->create($data);
 
         return redirect()->route('incomes.show', $income);
     }

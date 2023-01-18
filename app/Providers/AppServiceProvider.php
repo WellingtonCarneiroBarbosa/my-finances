@@ -34,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
             return $this->is('api/*') && $this->expectsJson();
         });
 
+        Request::macro('currentUser', function (): ?\App\Models\User {
+            return $this->user();
+        });
+
         Str::macro('withoutNumbers', function (string $str) {
             return preg_replace('/[0-9]+/', '', $str);
         });

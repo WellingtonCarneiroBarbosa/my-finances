@@ -33,6 +33,8 @@ use Laravel\Jetstream\Team as JetstreamTeam;
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Income[] $incomes
+ * @property-read int|null $incomes_count
  */
 class Team extends JetstreamTeam
 {
@@ -67,4 +69,9 @@ class Team extends JetstreamTeam
         'updated' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
+
+    public function incomes()
+    {
+        return $this->hasMany(Income::class);
+    }
 }
