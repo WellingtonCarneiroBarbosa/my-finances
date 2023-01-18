@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Team;
 use App\Models\User;
-use App\Models\Workspace;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class WorkspacePolicy
+class TeamPolicy
 {
     use HandlesAuthorization;
 
@@ -21,9 +21,9 @@ class WorkspacePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Workspace $workspace): bool
+    public function view(User $user, Team $team): bool
     {
-        return $user->belongsToWorkspace($workspace);
+        return $user->belongsToTeam($team);
     }
 
     /**
@@ -37,40 +37,40 @@ class WorkspacePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Workspace $workspace): bool
+    public function update(User $user, Team $team): bool
     {
-        return $user->ownsWorkspace($workspace);
+        return $user->ownsTeam($team);
     }
 
     /**
-     * Determine whether the user can add workspace members.
+     * Determine whether the user can add team members.
      */
-    public function addWorkspaceMember(User $user, Workspace $workspace): bool
+    public function addTeamMember(User $user, Team $team): bool
     {
-        return $user->ownsWorkspace($workspace);
+        return $user->ownsTeam($team);
     }
 
     /**
-     * Determine whether the user can update workspace member permissions.
+     * Determine whether the user can update team member permissions.
      */
-    public function updateWorkspaceMember(User $user, Workspace $workspace): bool
+    public function updateTeamMember(User $user, Team $team): bool
     {
-        return $user->ownsWorkspace($workspace);
+        return $user->ownsTeam($team);
     }
 
     /**
-     * Determine whether the user can remove workspace members.
+     * Determine whether the user can remove team members.
      */
-    public function removeWorkspaceMember(User $user, Workspace $workspace): bool
+    public function removeTeamMember(User $user, Team $team): bool
     {
-        return $user->ownsWorkspace($workspace);
+        return $user->ownsTeam($team);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Workspace $workspace): bool
+    public function delete(User $user, Team $team): bool
     {
-        return $user->ownsWorkspace($workspace);
+        return $user->ownsTeam($team);
     }
 }
