@@ -7,7 +7,7 @@ use Laravel\Jetstream\Jetstream;
 use Laravel\Jetstream\TeamInvitation as JetstreamTeamInvitation;
 
 /**
- * App\Models\TeamInvitation
+ * Invitation
  *
  * @property int $id
  * @property int $team_id
@@ -15,7 +15,7 @@ use Laravel\Jetstream\TeamInvitation as JetstreamTeamInvitation;
  * @property string|null $role
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Team $team
+ * @property-read  $team
  * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation query()
@@ -27,8 +27,10 @@ use Laravel\Jetstream\TeamInvitation as JetstreamTeamInvitation;
  * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class TeamInvitation extends JetstreamTeamInvitation
+class WorkspaceInvitation extends JetstreamTeamInvitation
 {
+    protected $table = 'team_invitations';
+
     /**
      * The attributes that are mass assignable.
      *

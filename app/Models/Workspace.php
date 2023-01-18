@@ -9,7 +9,7 @@ use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
 
 /**
- * App\Models\Team
+ *
  *
  * @property int $id
  * @property int $user_id
@@ -18,7 +18,7 @@ use Laravel\Jetstream\Team as JetstreamTeam;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $owner
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TeamInvitation[] $teamInvitations
+ * @property-read \Illuminate\Database\Eloquent\Collection|Invitation[] $teamInvitations
  * @property-read int|null $team_invitations_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
  * @property-read int|null $users_count
@@ -34,9 +34,11 @@ use Laravel\Jetstream\Team as JetstreamTeam;
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUserId($value)
  * @mixin \Eloquent
  */
-class Team extends JetstreamTeam
+class Workspace extends JetstreamTeam
 {
     use HasFactory;
+
+    protected $table = 'teams';
 
     /**
      * The attributes that should be cast.
