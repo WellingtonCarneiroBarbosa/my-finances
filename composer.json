@@ -11,6 +11,7 @@
         "laravel/horizon": "^5.13",
         "laravel/jetstream": "^2.15",
         "laravel/sanctum": "^3.0",
+        "laravel/telescope": "^4.12",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.11"
     },
