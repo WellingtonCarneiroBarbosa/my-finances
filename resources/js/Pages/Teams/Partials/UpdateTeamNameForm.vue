@@ -1,11 +1,11 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { useForm } from "@inertiajs/vue3";
+import ActionMessage from "@/Components/ActionMessage.vue";
+import FormSection from "@/Components/FormSection.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
 
 const props = defineProps({
     team: Object,
@@ -17,8 +17,8 @@ const form = useForm({
 });
 
 const updateTeamName = () => {
-    form.put(route('teams.update', props.team), {
-        errorBag: 'updateTeamName',
+    form.put(route("teams.update", props.team), {
+        errorBag: "updateTeamName",
         preserveScroll: true,
     });
 };
@@ -26,21 +26,23 @@ const updateTeamName = () => {
 
 <template>
     <FormSection @submitted="updateTeamName">
-        <template #title>
-            Team Name
-        </template>
+        <template #title> Workspace Name </template>
 
         <template #description>
-            The team's name and owner information.
+            The workspace's name and owner information.
         </template>
 
         <template #form>
-            <!-- Team Owner Information -->
+            <!-- Workspace Owner Information -->
             <div class="col-span-6">
-                <InputLabel value="Team Owner" />
+                <InputLabel value="Workspace Owner" />
 
                 <div class="flex items-center mt-2">
-                    <img class="w-12 h-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
+                    <img
+                        class="w-12 h-12 rounded-full object-cover"
+                        :src="team.owner.profile_photo_url"
+                        :alt="team.owner.name"
+                    />
 
                     <div class="ml-4 leading-tight">
                         <div class="dark:text-white">{{ team.owner.name }}</div>
@@ -51,16 +53,16 @@ const updateTeamName = () => {
                 </div>
             </div>
 
-            <!-- Team Name -->
+            <!-- Workspace Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Team Name" />
+                <InputLabel for="name" value="Workspace Name" />
 
                 <TextInput
                     id="name"
                     v-model="form.name"
                     type="text"
                     class="mt-1 block w-full"
-                    :disabled="! permissions.canUpdateTeam"
+                    :disabled="!permissions.canUpdateTeam"
                 />
 
                 <InputError :message="form.errors.name" class="mt-2" />
@@ -72,7 +74,10 @@ const updateTeamName = () => {
                 Saved.
             </ActionMessage>
 
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <PrimaryButton
+                :class="{ 'opacity-25': form.processing }"
+                :disabled="form.processing"
+            >
                 Save
             </PrimaryButton>
         </template>

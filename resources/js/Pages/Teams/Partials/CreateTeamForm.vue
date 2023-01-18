@@ -1,18 +1,18 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { useForm } from "@inertiajs/vue3";
+import FormSection from "@/Components/FormSection.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
 
 const form = useForm({
-    name: '',
+    name: "",
 });
 
 const createTeam = () => {
-    form.post(route('teams.store'), {
-        errorBag: 'createTeam',
+    form.post(route("teams.store"), {
+        errorBag: "createTeam",
         preserveScroll: true,
     });
 };
@@ -20,9 +20,7 @@ const createTeam = () => {
 
 <template>
     <FormSection @submitted="createTeam">
-        <template #title>
-            Team Details
-        </template>
+        <template #title> Workspace Details </template>
 
         <template #description>
             Create a new team to collaborate with others on projects.
@@ -30,13 +28,19 @@ const createTeam = () => {
 
         <template #form>
             <div class="col-span-6">
-                <InputLabel value="Team Owner" />
+                <InputLabel value="Workspace Owner" />
 
                 <div class="flex items-center mt-2">
-                    <img class="object-cover w-12 h-12 rounded-full" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
+                    <img
+                        class="object-cover w-12 h-12 rounded-full"
+                        :src="$page.props.user.profile_photo_url"
+                        :alt="$page.props.user.name"
+                    />
 
                     <div class="ml-4 leading-tight">
-                        <div class="dark:text-white">{{ $page.props.user.name }}</div>
+                        <div class="dark:text-white">
+                            {{ $page.props.user.name }}
+                        </div>
                         <div class="text-sm text-gray-700 dark:text-gray-300">
                             {{ $page.props.user.email }}
                         </div>
@@ -45,7 +49,7 @@ const createTeam = () => {
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Team Name" />
+                <InputLabel for="name" value="Workspace Name" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -58,7 +62,10 @@ const createTeam = () => {
         </template>
 
         <template #actions>
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <PrimaryButton
+                :class="{ 'opacity-25': form.processing }"
+                :disabled="form.processing"
+            >
                 Create
             </PrimaryButton>
         </template>
