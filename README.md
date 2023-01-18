@@ -1,6 +1,6 @@
 # My Finances
 
-My Finances is a simple, free, open source, personal finance manager. It is a web application that allows you to manage your personal finances, such as income, expenses, and savings. Also, you can create categories and tags to organize your transactions. Besides that, you can create a budget and track your expenses and create dedicated workspaces for each of your projects.
+My Finances is a simple, free and open source, personal finance manager. It is a web application that allows you to manage your personal finances, such as income, expenses, and savings. Also, you can create categories and tags to organize your transactions. Besides that, you can create a budget and track your expenses and create dedicated workspaces for each of your projects.
 
 ## Requirements
 
