@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
-use Livewire\Livewire;
 use Tests\TestCase;
 
 class RemoveTeamMemberTest extends TestCase
@@ -21,9 +19,7 @@ class RemoveTeamMemberTest extends TestCase
             ['role' => 'admin']
         );
 
-        $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-                        ->set('teamMemberIdBeingRemoved', $otherUser->id)
-                        ->call('removeTeamMember');
+        $response = $this->delete('/teams/' . $user->currentTeam->id . '/members/' . $otherUser->id);
 
         $this->assertCount(0, $user->currentTeam->fresh()->users);
     }
@@ -39,9 +35,8 @@ class RemoveTeamMemberTest extends TestCase
 
         $this->actingAs($otherUser);
 
-        $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-                        ->set('teamMemberIdBeingRemoved', $user->id)
-                        ->call('removeTeamMember')
-                        ->assertStatus(403);
+        $response = $this->delete('/teams/' . $user->currentTeam->id . '/members/' . $user->id);
+
+        $response->assertStatus(403);
     }
 }
