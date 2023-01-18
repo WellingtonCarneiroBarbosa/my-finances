@@ -57,10 +57,14 @@ const logout = () => {
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
                                 <NavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')"
+                                    :href="route('dashboard.expenses.create')"
+                                    :active="
+                                        route().current(
+                                            'dashboard.expenses.create'
+                                        )
+                                    "
                                 >
-                                    Dashboard
+                                    Registrar Gastos
                                 </NavLink>
 
                                 <NavLink
@@ -72,6 +76,21 @@ const logout = () => {
                                     "
                                 >
                                     Adicionar Receita
+                                </NavLink>
+
+                                <NavLink
+                                    :href="
+                                        route(
+                                            'dashboard.expenses.categories.create'
+                                        )
+                                    "
+                                    :active="
+                                        route().current(
+                                            'dashboard.expenses.categories.create'
+                                        )
+                                    "
+                                >
+                                    Adicionar Categoria de Gastos
                                 </NavLink>
                             </div>
                         </div>
