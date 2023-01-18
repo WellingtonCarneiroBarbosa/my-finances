@@ -2,7 +2,6 @@
 
 namespace App\Actions\Jetstream;
 
-use ;
 use Laravel\Jetstream\Contracts\DeletesTeams;
 
 class DeleteTeam implements DeletesTeams

@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use ;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -13,7 +12,7 @@ class TeamFactory extends Factory
      *
      * @var string
      */
-    protected $model = Team::class;
+    protected $model = Workspace::class;
 
     /**
      * Define the model's default state.

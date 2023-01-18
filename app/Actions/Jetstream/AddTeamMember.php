@@ -2,7 +2,6 @@
 
 namespace App\Actions\Jetstream;
 
-use ;
 use App\Models\User;
 use Closure;
 use Illuminate\Support\Facades\Gate;

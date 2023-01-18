@@ -2,12 +2,10 @@
 
 namespace App\Actions\Jetstream;
 
-use ;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Contracts\CreatesTeams;
-use Laravel\Jetstream\Events\AddingTeam;
 use Laravel\Jetstream\Jetstream;
 
 class CreateTeam implements CreatesTeams
@@ -25,7 +23,7 @@ class CreateTeam implements CreatesTeams
             'name' => ['required', 'string', 'max:255'],
         ])->validateWithBag('createTeam');
 
-        AddingTeam::dispatch($user);
+        AddingWorkspace::dispatch($user);
 
         $user->switchTeam($team = $user->ownedTeams()->create([
             'name'          => $input['name'],

@@ -2,7 +2,6 @@
 
 namespace App\Actions\Jetstream;
 
-use ;
 use App\Models\User;
 use Closure;
 use Illuminate\Database\Query\Builder;
@@ -66,7 +65,7 @@ class InviteTeamMember implements InvitesTeamMembers
                     $query->where('team_id', $team->id);
                 }),
             ],
-            'role' => Jetstream::hasRoles()
+            'role'  => Jetstream::hasRoles()
                             ? ['required', 'string', new Role()]
                             : null,
         ]);

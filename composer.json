@@ -73,6 +73,7 @@
             "@php artisan test --parallel --coverage --min=85"
         ],
         "clear-laravel": [
+            "composer dump-autoload",
             "@php artisan cache:clear",
             "@php artisan config:clear",
             "@php artisan view:clear",

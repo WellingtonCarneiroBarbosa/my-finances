@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use ;
+use App\Models\Workspace;
 use App\Policies\TeamPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Team::class => TeamPolicy::class,
+        Workspace::class => TeamPolicy::class,
     ];
 
     /**

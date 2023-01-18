@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use ;
 use App\Models\User;
+use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
@@ -63,7 +63,7 @@ class UserFactory extends Factory
         }
 
         return $this->has(
-            Team::factory()
+            Workspace::factory()
                 ->state(function (array $attributes, User $user) {
                     return ['name' => $user->name . '\'s Team', 'user_id' => $user->id, 'personal_team' => true];
                 }),
