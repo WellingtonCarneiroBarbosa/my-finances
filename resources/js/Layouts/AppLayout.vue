@@ -62,6 +62,17 @@ const logout = () => {
                                 >
                                     Dashboard
                                 </NavLink>
+
+                                <NavLink
+                                    :href="route('dashboard.incomes.create')"
+                                    :active="
+                                        route().current(
+                                            'dashboard.incomes.create'
+                                        )
+                                    "
+                                >
+                                    Adicionar Receita
+                                </NavLink>
                             </div>
                         </div>
 
