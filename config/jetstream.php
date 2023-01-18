@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'stack' => 'livewire',
+    'stack'              => 'livewire',
 
     /*
      |--------------------------------------------------------------------------
@@ -29,9 +29,9 @@ return [
      |
      */
 
-    'middleware' => ['web'],
+    'middleware'         => ['web'],
 
-    'auth_session' => AuthenticateSession::class,
+    'auth_session'       => AuthenticateSession::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -44,7 +44,7 @@ return [
     |
     */
 
-    'guard' => 'sanctum',
+    'guard'              => 'sanctum',
 
     /*
     |--------------------------------------------------------------------------
@@ -57,11 +57,11 @@ return [
     |
     */
 
-    'features' => [
+    'features'           => [
         // Features::termsAndPrivacyPolicy(),
         // Features::profilePhotos(),
         // Features::api(),
-        Features::teams(['invitations' => true]),
+        Features::workspaces(['invitations' => true]),
         Features::accountDeletion(),
     ],
 

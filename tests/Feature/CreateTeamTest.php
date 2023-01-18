@@ -4,23 +4,23 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Jetstream\Http\Livewire\CreateTeamForm;
+use Laravel\Jetstream\Http\Livewire\CreateWorkspaceForm;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class CreateTeamTest extends TestCase
+class CreateWorkspaceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_teams_can_be_created(): void
+    public function test_workspaces_can_be_created(): void
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = User::factory()->withPersonalWorkspace()->create());
 
-        Livewire::test(CreateTeamForm::class)
-                    ->set(['state' => ['name' => 'Test Team']])
-                    ->call('createTeam');
+        Livewire::test(CreateWorkspaceForm::class)
+                    ->set(['state' => ['name' => 'Test Workspace']])
+                    ->call('createWorkspace');
 
-        $this->assertCount(2, $user->fresh()->ownedTeams);
-        $this->assertEquals('Test Team', $user->fresh()->ownedTeams()->latest('id')->first()->name);
+        $this->assertCount(2, $user->fresh()->ownedWorkspaces);
+        $this->assertEquals('Test Workspace', $user->fresh()->ownedWorkspaces()->latest('id')->first()->name);
     }
 }

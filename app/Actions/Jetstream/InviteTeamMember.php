@@ -2,86 +2,86 @@
 
 namespace App\Actions\Jetstream;
 
-use App\Models\Team;
 use App\Models\User;
+use App\Models\Workspace;
 use Closure;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Laravel\Jetstream\Contracts\InvitesTeamMembers;
-use Laravel\Jetstream\Events\InvitingTeamMember;
+use Laravel\Jetstream\Contracts\InvitesWorkspaceMembers;
+use Laravel\Jetstream\Events\InvitingWorkspaceMember;
 use Laravel\Jetstream\Jetstream;
-use Laravel\Jetstream\Mail\TeamInvitation;
+use Laravel\Jetstream\Mail\WorkspaceInvitation;
 use Laravel\Jetstream\Rules\Role;
 
-class InviteTeamMember implements InvitesTeamMembers
+class InviteWorkspaceMember implements InvitesWorkspaceMembers
 {
     /**
-     * Invite a new team member to the given team.
+     * Invite a new workspace member to the given workspace.
      */
-    public function invite(User $user, Team $team, string $email, string $role = null): void
+    public function invite(User $user, Workspace $workspace, string $email, string $role = null): void
     {
-        Gate::forUser($user)->authorize('addTeamMember', $team);
+        Gate::forUser($user)->authorize('addWorkspaceMember', $workspace);
 
-        $this->validate($team, $email, $role);
+        $this->validate($workspace, $email, $role);
 
-        InvitingTeamMember::dispatch($team, $email, $role);
+        InvitingWorkspaceMember::dispatch($workspace, $email, $role);
 
-        $invitation = $team->teamInvitations()->create([
+        $invitation = $workspace->workspaceInvitations()->create([
             'email' => $email,
             'role'  => $role,
         ]);
 
-        Mail::to($email)->send(new TeamInvitation($invitation));
+        Mail::to($email)->send(new WorkspaceInvitation($invitation));
     }
 
     /**
      * Validate the invite member operation.
      */
-    protected function validate(Team $team, string $email, ?string $role): void
+    protected function validate(Workspace $workspace, string $email, ?string $role): void
     {
         Validator::make([
             'email' => $email,
             'role'  => $role,
-        ], $this->rules($team), [
-            'email.unique' => __('This user has already been invited to the team.'),
+        ], $this->rules($workspace), [
+            'email.unique' => __('This user has already been invited to the workspace.'),
         ])->after(
-            $this->ensureUserIsNotAlreadyOnTeam($team, $email)
-        )->validateWithBag('addTeamMember');
+            $this->ensureUserIsNotAlreadyOnWorkspace($workspace, $email)
+        )->validateWithBag('addWorkspaceMember');
     }
 
     /**
-     * Get the validation rules for inviting a team member.
+     * Get the validation rules for inviting a workspace member.
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    protected function rules(Team $team): array
+    protected function rules(Workspace $workspace): array
     {
         return array_filter([
             'email' => [
                 'required', 'email',
-                Rule::unique('team_invitations')->where(function (Builder $query) use ($team) {
-                    $query->where('team_id', $team->id);
+                Rule::unique('workspace_invitations')->where(function (Builder $query) use ($workspace) {
+                    $query->where('workspace_id', $workspace->id);
                 }),
             ],
-            'role' => Jetstream::hasRoles()
+            'role'  => Jetstream::hasRoles()
                             ? ['required', 'string', new Role()]
                             : null,
         ]);
     }
 
     /**
-     * Ensure that the user is not already on the team.
+     * Ensure that the user is not already on the workspace.
      */
-    protected function ensureUserIsNotAlreadyOnTeam(Team $team, string $email): Closure
+    protected function ensureUserIsNotAlreadyOnWorkspace(Workspace $workspace, string $email): Closure
     {
-        return function ($validator) use ($team, $email) {
+        return function ($validator) use ($workspace, $email) {
             $validator->errors()->addIf(
-                $team->hasUserWithEmail($email),
+                $workspace->hasUserWithEmail($email),
                 'email',
-                __('This user already belongs to the team.')
+                __('This user already belongs to the workspace.')
             );
         };
     }

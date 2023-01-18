@@ -2,27 +2,27 @@
 
 namespace App\Actions\Jetstream;
 
-use App\Models\Team;
 use App\Models\User;
+use App\Models\Workspace;
 use Illuminate\Support\Facades\DB;
-use Laravel\Jetstream\Contracts\DeletesTeams;
 use Laravel\Jetstream\Contracts\DeletesUsers;
+use Laravel\Jetstream\Contracts\DeletesWorkspaces;
 
 class DeleteUser implements DeletesUsers
 {
     /**
-     * The team deleter implementation.
+     * The workspace deleter implementation.
      *
-     * @var \Laravel\Jetstream\Contracts\DeletesTeams
+     * @var \Laravel\Jetstream\Contracts\DeletesWorkspaces
      */
-    protected $deletesTeams;
+    protected $deletesWorkspaces;
 
     /**
      * Create a new action instance.
      */
-    public function __construct(DeletesTeams $deletesTeams)
+    public function __construct(DeletesWorkspaces $deletesWorkspaces)
     {
-        $this->deletesTeams = $deletesTeams;
+        $this->deletesWorkspaces = $deletesWorkspaces;
     }
 
     /**
@@ -31,7 +31,7 @@ class DeleteUser implements DeletesUsers
     public function delete(User $user): void
     {
         DB::transaction(function () use ($user) {
-            $this->deleteTeams($user);
+            $this->deleteWorkspaces($user);
             $user->deleteProfilePhoto();
             $user->tokens->each->delete();
             $user->delete();
@@ -39,14 +39,14 @@ class DeleteUser implements DeletesUsers
     }
 
     /**
-     * Delete the teams and team associations attached to the user.
+     * Delete the workspaces and workspace associations attached to the user.
      */
-    protected function deleteTeams(User $user): void
+    protected function deleteWorkspaces(User $user): void
     {
-        $user->teams()->detach();
+        $user->workspaces()->detach();
 
-        $user->ownedTeams->each(function (Team $team) {
-            $this->deletesTeams->delete($team);
+        $user->ownedWorkspaces->each(function (Workspace $workspace) {
+            $this->deletesWorkspaces->delete($workspace);
         });
     }
 }

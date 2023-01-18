@@ -23,7 +23,7 @@ class EmailVerificationTest extends TestCase
             return;
         }
 
-        $user = User::factory()->withPersonalTeam()->unverified()->create();
+        $user = User::factory()->withPersonalWorkspace()->unverified()->create();
 
         $response = $this->actingAs($user)->get('/email/verify');
 

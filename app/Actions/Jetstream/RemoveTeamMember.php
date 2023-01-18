@@ -2,50 +2,50 @@
 
 namespace App\Actions\Jetstream;
 
-use App\Models\Team;
 use App\Models\User;
+use App\Models\Workspace;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
-use Laravel\Jetstream\Contracts\RemovesTeamMembers;
-use Laravel\Jetstream\Events\TeamMemberRemoved;
+use Laravel\Jetstream\Contracts\RemovesWorkspaceMembers;
+use Laravel\Jetstream\Events\WorkspaceMemberRemoved;
 
-class RemoveTeamMember implements RemovesTeamMembers
+class RemoveWorkspaceMember implements RemovesWorkspaceMembers
 {
     /**
-     * Remove the team member from the given team.
+     * Remove the workspace member from the given workspace.
      */
-    public function remove(User $user, Team $team, User $teamMember): void
+    public function remove(User $user, Workspace $workspace, User $workspaceMember): void
     {
-        $this->authorize($user, $team, $teamMember);
+        $this->authorize($user, $workspace, $workspaceMember);
 
-        $this->ensureUserDoesNotOwnTeam($teamMember, $team);
+        $this->ensureUserDoesNotOwnWorkspace($workspaceMember, $workspace);
 
-        $team->removeUser($teamMember);
+        $workspace->removeUser($workspaceMember);
 
-        TeamMemberRemoved::dispatch($team, $teamMember);
+        WorkspaceMemberRemoved::dispatch($workspace, $workspaceMember);
     }
 
     /**
-     * Authorize that the user can remove the team member.
+     * Authorize that the user can remove the workspace member.
      */
-    protected function authorize(User $user, Team $team, User $teamMember): void
+    protected function authorize(User $user, Workspace $workspace, User $workspaceMember): void
     {
-        if (! Gate::forUser($user)->check('removeTeamMember', $team) &&
-            $user->id !== $teamMember->id) {
+        if (! Gate::forUser($user)->check('removeWorkspaceMember', $workspace) &&
+            $user->id !== $workspaceMember->id) {
             throw new AuthorizationException();
         }
     }
 
     /**
-     * Ensure that the currently authenticated user does not own the team.
+     * Ensure that the currently authenticated user does not own the workspace.
      */
-    protected function ensureUserDoesNotOwnTeam(User $teamMember, Team $team): void
+    protected function ensureUserDoesNotOwnWorkspace(User $workspaceMember, Workspace $workspace): void
     {
-        if ($teamMember->id === $team->owner->id) {
+        if ($workspaceMember->id === $workspace->owner->id) {
             throw ValidationException::withMessages([
-                'team' => [__('You may not leave a team that you created.')],
-            ])->errorBag('removeTeamMember');
+                'workspace' => [__('You may not leave a workspace that you created.')],
+            ])->errorBag('removeWorkspaceMember');
         }
     }
 }

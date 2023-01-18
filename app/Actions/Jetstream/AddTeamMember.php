@@ -2,44 +2,44 @@
 
 namespace App\Actions\Jetstream;
 
-use App\Models\Team;
 use App\Models\User;
+use App\Models\Workspace;
 use Closure;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Jetstream\Contracts\AddsTeamMembers;
-use Laravel\Jetstream\Events\AddingTeamMember;
-use Laravel\Jetstream\Events\TeamMemberAdded;
+use Laravel\Jetstream\Contracts\AddsWorkspaceMembers;
+use Laravel\Jetstream\Events\AddingWorkspaceMember;
+use Laravel\Jetstream\Events\WorkspaceMemberAdded;
 use Laravel\Jetstream\Jetstream;
 use Laravel\Jetstream\Rules\Role;
 
-class AddTeamMember implements AddsTeamMembers
+class AddWorkspaceMember implements AddsWorkspaceMembers
 {
     /**
-     * Add a new team member to the given team.
+     * Add a new workspace member to the given workspace.
      */
-    public function add(User $user, Team $team, string $email, string $role = null): void
+    public function add(User $user, Workspace $workspace, string $email, string $role = null): void
     {
-        Gate::forUser($user)->authorize('addTeamMember', $team);
+        Gate::forUser($user)->authorize('addWorkspaceMember', $workspace);
 
-        $this->validate($team, $email, $role);
+        $this->validate($workspace, $email, $role);
 
-        $newTeamMember = Jetstream::findUserByEmailOrFail($email);
+        $newWorkspaceMember = Jetstream::findUserByEmailOrFail($email);
 
-        AddingTeamMember::dispatch($team, $newTeamMember);
+        AddingWorkspaceMember::dispatch($workspace, $newWorkspaceMember);
 
-        $team->users()->attach(
-            $newTeamMember,
+        $workspace->users()->attach(
+            $newWorkspaceMember,
             ['role' => $role]
         );
 
-        TeamMemberAdded::dispatch($team, $newTeamMember);
+        WorkspaceMemberAdded::dispatch($workspace, $newWorkspaceMember);
     }
 
     /**
      * Validate the add member operation.
      */
-    protected function validate(Team $team, string $email, ?string $role): void
+    protected function validate(Workspace $workspace, string $email, ?string $role): void
     {
         Validator::make([
             'email' => $email,
@@ -47,12 +47,12 @@ class AddTeamMember implements AddsTeamMembers
         ], $this->rules(), [
             'email.exists' => __('We were unable to find a registered user with this email address.'),
         ])->after(
-            $this->ensureUserIsNotAlreadyOnTeam($team, $email)
-        )->validateWithBag('addTeamMember');
+            $this->ensureUserIsNotAlreadyOnWorkspace($workspace, $email)
+        )->validateWithBag('addWorkspaceMember');
     }
 
     /**
-     * Get the validation rules for adding a team member.
+     * Get the validation rules for adding a workspace member.
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
@@ -67,15 +67,15 @@ class AddTeamMember implements AddsTeamMembers
     }
 
     /**
-     * Ensure that the user is not already on the team.
+     * Ensure that the user is not already on the workspace.
      */
-    protected function ensureUserIsNotAlreadyOnTeam(Team $team, string $email): Closure
+    protected function ensureUserIsNotAlreadyOnWorkspace(Workspace $workspace, string $email): Closure
     {
-        return function ($validator) use ($team, $email) {
+        return function ($validator) use ($workspace, $email) {
             $validator->errors()->addIf(
-                $team->hasUserWithEmail($email),
+                $workspace->hasUserWithEmail($email),
                 'email',
-                __('This user already belongs to the team.')
+                __('This user already belongs to the workspace.')
             );
         };
     }

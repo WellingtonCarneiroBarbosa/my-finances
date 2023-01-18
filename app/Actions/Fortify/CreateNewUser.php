@@ -2,8 +2,8 @@
 
 namespace App\Actions\Fortify;
 
-use App\Models\Team;
 use App\Models\User;
+use App\Models\Workspace;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -34,20 +34,20 @@ class CreateNewUser implements CreatesNewUsers
                 'email'    => $input['email'],
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
-                $this->createTeam($user);
+                $this->createWorkspace($user);
             });
         });
     }
 
     /**
-     * Create a personal team for the user.
+     * Create a personal workspace for the user.
      */
-    protected function createTeam(User $user): void
+    protected function createWorkspace(User $user): void
     {
-        $user->ownedTeams()->save(Team::forceCreate([
-            'user_id'       => $user->id,
-            'name'          => explode(' ', $user->name, 2)[0] . "'s Team",
-            'personal_team' => true,
+        $user->ownedWorkspaces()->save(Workspace::forceCreate([
+            'user_id'            => $user->id,
+            'name'               => explode(' ', $user->name, 2)[0] . "'s Workspace",
+            'personal_workspace' => true,
         ]));
     }
 }

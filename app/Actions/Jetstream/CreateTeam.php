@@ -2,36 +2,36 @@
 
 namespace App\Actions\Jetstream;
 
-use App\Models\Team;
 use App\Models\User;
+use App\Models\Workspace;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Jetstream\Contracts\CreatesTeams;
-use Laravel\Jetstream\Events\AddingTeam;
+use Laravel\Jetstream\Contracts\CreatesWorkspaces;
+use Laravel\Jetstream\Events\AddingWorkspace;
 use Laravel\Jetstream\Jetstream;
 
-class CreateTeam implements CreatesTeams
+class CreateWorkspace implements CreatesWorkspaces
 {
     /**
-     * Validate and create a new team for the given user.
+     * Validate and create a new workspace for the given user.
      *
      * @param  array<string, string>  $input
      */
-    public function create(User $user, array $input): Team
+    public function create(User $user, array $input): Workspace
     {
-        Gate::forUser($user)->authorize('create', Jetstream::newTeamModel());
+        Gate::forUser($user)->authorize('create', Jetstream::newWorkspaceModel());
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-        ])->validateWithBag('createTeam');
+        ])->validateWithBag('createWorkspace');
 
-        AddingTeam::dispatch($user);
+        AddingWorkspace::dispatch($user);
 
-        $user->switchTeam($team = $user->ownedTeams()->create([
-            'name'          => $input['name'],
-            'personal_team' => false,
+        $user->switchWorkspace($workspace = $user->ownedWorkspaces()->create([
+            'name'               => $input['name'],
+            'personal_workspace' => false,
         ]));
 
-        return $team;
+        return $workspace;
     }
 }

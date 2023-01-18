@@ -2,16 +2,16 @@
 
 namespace App\Actions\Jetstream;
 
-use App\Models\Team;
-use Laravel\Jetstream\Contracts\DeletesTeams;
+use App\Models\Workspace;
+use Laravel\Jetstream\Contracts\DeletesWorkspaces;
 
-class DeleteTeam implements DeletesTeams
+class DeleteWorkspace implements DeletesWorkspaces
 {
     /**
-     * Delete the given team.
+     * Delete the given workspace.
      */
-    public function delete(Team $team): void
+    public function delete(Workspace $workspace): void
     {
-        $team->purge();
+        $workspace->purge();
     }
 }

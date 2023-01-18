@@ -6,62 +6,62 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Jetstream\Features;
-use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
-use Laravel\Jetstream\Mail\TeamInvitation;
+use Laravel\Jetstream\Http\Livewire\WorkspaceMemberManager;
+use Laravel\Jetstream\Mail\WorkspaceInvitation;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class InviteTeamMemberTest extends TestCase
+class InviteWorkspaceMemberTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_team_members_can_be_invited_to_team(): void
+    public function test_workspace_members_can_be_invited_to_workspace(): void
     {
-        if (! Features::sendsTeamInvitations()) {
-            $this->markTestSkipped('Team invitations not enabled.');
+        if (! Features::sendsWorkspaceInvitations()) {
+            $this->markTestSkipped('Workspace invitations not enabled.');
 
             return;
         }
 
         Mail::fake();
 
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = User::factory()->withPersonalWorkspace()->create());
 
-        $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-                        ->set('addTeamMemberForm', [
+        $component = Livewire::test(WorkspaceMemberManager::class, ['workspace' => $user->currentWorkspace])
+                        ->set('addWorkspaceMemberForm', [
                             'email' => 'test@example.com',
                             'role'  => 'admin',
-                        ])->call('addTeamMember');
+                        ])->call('addWorkspaceMember');
 
-        Mail::assertSent(TeamInvitation::class);
+        Mail::assertSent(WorkspaceInvitation::class);
 
-        $this->assertCount(1, $user->currentTeam->fresh()->teamInvitations);
+        $this->assertCount(1, $user->currentWorkspace->fresh()->workspaceInvitations);
     }
 
-    public function test_team_member_invitations_can_be_cancelled(): void
+    public function test_workspace_member_invitations_can_be_cancelled(): void
     {
-        if (! Features::sendsTeamInvitations()) {
-            $this->markTestSkipped('Team invitations not enabled.');
+        if (! Features::sendsWorkspaceInvitations()) {
+            $this->markTestSkipped('Workspace invitations not enabled.');
 
             return;
         }
 
         Mail::fake();
 
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = User::factory()->withPersonalWorkspace()->create());
 
-        // Add the team member...
-        $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-                        ->set('addTeamMemberForm', [
+        // Add the workspace member...
+        $component = Livewire::test(WorkspaceMemberManager::class, ['workspace' => $user->currentWorkspace])
+                        ->set('addWorkspaceMemberForm', [
                             'email' => 'test@example.com',
                             'role'  => 'admin',
-                        ])->call('addTeamMember');
+                        ])->call('addWorkspaceMember');
 
-        $invitationId = $user->currentTeam->fresh()->teamInvitations->first()->id;
+        $invitationId = $user->currentWorkspace->fresh()->workspaceInvitations->first()->id;
 
-        // Cancel the team invitation...
-        $component->call('cancelTeamInvitation', $invitationId);
+        // Cancel the workspace invitation...
+        $component->call('cancelWorkspaceInvitation', $invitationId);
 
-        $this->assertCount(0, $user->currentTeam->fresh()->teamInvitations);
+        $this->assertCount(0, $user->currentWorkspace->fresh()->workspaceInvitations);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use App\Actions\Jetstream\AddTeamMember;
-use App\Actions\Jetstream\CreateTeam;
-use App\Actions\Jetstream\DeleteTeam;
+use App\Actions\Jetstream\AddWorkspaceMember;
+use App\Actions\Jetstream\CreateWorkspace;
 use App\Actions\Jetstream\DeleteUser;
-use App\Actions\Jetstream\InviteTeamMember;
-use App\Actions\Jetstream\RemoveTeamMember;
-use App\Actions\Jetstream\UpdateTeamName;
+use App\Actions\Jetstream\DeleteWorkspace;
+use App\Actions\Jetstream\InviteWorkspaceMember;
+use App\Actions\Jetstream\RemoveWorkspaceMember;
+use App\Actions\Jetstream\UpdateWorkspaceName;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
 
@@ -29,12 +29,12 @@ class JetstreamServiceProvider extends ServiceProvider
     {
         $this->configurePermissions();
 
-        Jetstream::createTeamsUsing(CreateTeam::class);
-        Jetstream::updateTeamNamesUsing(UpdateTeamName::class);
-        Jetstream::addTeamMembersUsing(AddTeamMember::class);
-        Jetstream::inviteTeamMembersUsing(InviteTeamMember::class);
-        Jetstream::removeTeamMembersUsing(RemoveTeamMember::class);
-        Jetstream::deleteTeamsUsing(DeleteTeam::class);
+        Jetstream::createWorkspacesUsing(CreateWorkspace::class);
+        Jetstream::updateWorkspaceNamesUsing(UpdateWorkspaceName::class);
+        Jetstream::addWorkspaceMembersUsing(AddWorkspaceMember::class);
+        Jetstream::inviteWorkspaceMembersUsing(InviteWorkspaceMember::class);
+        Jetstream::removeWorkspaceMembersUsing(RemoveWorkspaceMember::class);
+        Jetstream::deleteWorkspacesUsing(DeleteWorkspace::class);
         Jetstream::deleteUsersUsing(DeleteUser::class);
     }
 
