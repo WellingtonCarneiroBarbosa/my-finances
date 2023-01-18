@@ -14,7 +14,6 @@
         "laravel/sanctum": "^3.0",
         "laravel/telescope": "^4.12",
         "laravel/tinker": "^2.7",
-        "livewire/livewire": "^2.11",
         "predis/predis": "^2.1",
         "tightenco/ziggy": "^1.0"
     },
