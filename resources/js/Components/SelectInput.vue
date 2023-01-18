@@ -6,6 +6,10 @@ defineProps({
         type: Array,
         required: true,
     },
+    noDataMessage: {
+        type: String,
+        default: "Nenhum dado encontrado",
+    },
     modelValue: String,
 });
 
@@ -29,7 +33,10 @@ defineExpose({ focus: () => input.value.focus() });
         :value="modelValue"
         @change="$emit('update:modelValue', $event.target.value)"
     >
-        <option value="" disabled>Selecione uma opção</option>
+        <option v-if="options.length === 0" value="">
+            {{ noDataMessage }}
+        </option>
+        <option v-else value="">Selecione uma opção</option>
         <option
             v-for="option in options"
             :key="option.value"

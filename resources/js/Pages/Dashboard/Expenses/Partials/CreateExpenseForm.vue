@@ -101,6 +101,7 @@ const handleCategoryCreated = () => {
                         type="text"
                         class="block w-full mt-1"
                         :options="categories"
+                        no-data-message="Cadastre uma categoria para continuar."
                     />
                     <PrimaryButton
                         type="button"
