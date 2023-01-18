@@ -75,13 +75,19 @@ const registerExpense = () => {
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="category" value="Categoria" />
 
-                <SelectInput
-                    id="category"
-                    v-model="form.category"
-                    type="text"
-                    class="block w-full mt-1"
-                    :options="categories"
-                />
+                <div class="flex flex-row">
+                    <SelectInput
+                        id="category"
+                        v-model="form.category"
+                        type="text"
+                        class="block w-full mt-1"
+                        :options="categories"
+                    />
+                    <PrimaryButton type="button" class="ml-2"
+                        >Adicionar Categoria
+                    </PrimaryButton>
+                </div>
+
                 <InputError :message="form.errors.category" class="mt-2" />
             </div>
 
