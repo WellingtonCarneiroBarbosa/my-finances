@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Expenses\Expense;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -37,6 +38,10 @@ use Laravel\Jetstream\Team as JetstreamTeam;
  * @property-read int|null $incomes_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Expenses\Category[] $categories
  * @property-read int|null $categories_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Expense[] $expenses
+ * @property-read int|null $expenses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Expenses\Category[] $expenseCategories
+ * @property-read int|null $expense_categories_count
  */
 class Team extends JetstreamTeam
 {
@@ -75,5 +80,15 @@ class Team extends JetstreamTeam
     public function incomes()
     {
         return $this->hasMany(Income::class);
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+
+    public function expenseCategories()
+    {
+        return $this->hasMany(Expenses\Category::class);
     }
 }

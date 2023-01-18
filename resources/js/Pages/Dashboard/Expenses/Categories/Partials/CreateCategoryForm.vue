@@ -7,13 +7,6 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import TextArea from "@/Components/TextArea.vue";
 
-defineProps({
-    recurringPeriods: {
-        type: Array,
-        required: true,
-    },
-});
-
 const form = useForm({
     name: "",
     description: "",

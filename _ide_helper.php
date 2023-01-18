@@ -19075,6 +19075,29 @@ namespace Illuminate\Support {
             return \Illuminate\Support\Str::onlyNumbers($str);
         }
     }
+    /**
+     *
+     *
+     * @template TKey of array-key
+     * @template TValue
+     * @implements \ArrayAccess<TKey, TValue>
+     * @implements \Illuminate\Support\Enumerable<TKey, TValue>
+     */
+    class Collection
+    {
+        /**
+         *
+         *
+         * @see \App\Providers\AppServiceProvider::boot()
+         * @param string $label
+         * @param string $value
+         * @static
+         */
+        public static function toSelect($label = 'name', $value = 'id')
+        {
+            return \Illuminate\Support\Collection::toSelect($label, $value);
+        }
+    }
 }
 
     namespace Jenssegers\Agent\Facades {

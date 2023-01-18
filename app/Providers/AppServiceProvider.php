@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -44,6 +45,15 @@ class AppServiceProvider extends ServiceProvider
 
         Str::macro('onlyNumbers', function (string $str) {
             return preg_replace('/[^0-9]/', '', $str);
+        });
+
+        Collection::macro('toSelect', function (string $label = 'name', string $value = 'id') {
+            return $this->map(function ($item) use ($label, $value) {
+                return [
+                    'label' => Str::ucfirst($item->$label),
+                    'value' => $item->$value,
+                ];
+            });
         });
     }
 }

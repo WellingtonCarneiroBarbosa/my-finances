@@ -38,6 +38,21 @@ namespace App\Models\Expenses{
     }
 }
 
+namespace App\Models\Expenses{
+    /**
+     * App\Models\Expenses\Expense
+     *
+     * @method static \Illuminate\Database\Eloquent\Builder|Expense newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Expense newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Expense query()
+     * @mixin \Eloquent
+     * @property-read \App\Models\Expenses\Category|null $category
+     */
+    class Expense extends \Eloquent
+    {
+    }
+}
+
 namespace App\Models{
     /**
      * App\Models\Income
@@ -129,6 +144,10 @@ namespace App\Models{
      * @property-read int|null $incomes_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Expenses\Category[] $categories
      * @property-read int|null $categories_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|Expense[] $expenses
+     * @property-read int|null $expenses_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Expenses\Category[] $expenseCategories
+     * @property-read int|null $expense_categories_count
      */
     class Team extends \Eloquent
     {

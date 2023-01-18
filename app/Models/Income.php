@@ -37,14 +37,4 @@ use Illuminate\Database\Eloquent\Model;
 class Income extends Model
 {
     use HasFactory;
-
-    public const RECURRING_INTERVALS = [
-        'daily'       => 1,
-        'weekly'      => 7,
-        'monthly'     => 30,
-        'trimesterly' => 90,
-        'half-yearly' => 180,
-        'yearly'      => 365,
-        'bi-yearly'   => 730,
-    ];
 }
