@@ -29,7 +29,7 @@ const createCategory = () => {
         preserveScroll: true,
         onSuccess: (response) => {
             form.reset("name", "description", "color");
-            created(response.props.data);
+            created(response.props.flash.data.category);
         },
     });
 };

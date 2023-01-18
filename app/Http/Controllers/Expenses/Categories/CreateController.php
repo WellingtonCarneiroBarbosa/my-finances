@@ -38,8 +38,14 @@ class CreateController extends Controller
             return redirect()->route('dashboard.expenses.categories.create');
         }
 
-        return redirect()->back()->with([
-            'category' => $category,
+        session()->flash('flash', [
+            'type'    => 'success',
+            'message' => 'Category created successfully.',
+            'data'    => [
+                'category' => $category,
+            ],
         ]);
+
+        return redirect()->back();
     }
 }

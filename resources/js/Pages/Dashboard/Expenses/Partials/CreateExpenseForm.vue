@@ -29,6 +29,7 @@ const form = useForm({
     description: "",
     amount: "",
     date: "",
+    category: "",
     is_recurring: false,
     recurring_period: "",
 });
@@ -50,9 +51,10 @@ const openCreateCategoryModal = () => {
     creatingCategory.value = true;
 };
 
-const handleCategoryCreated = () => {
+const handleCategoryCreated = (data) => {
     closeCreateCategoryModal();
-    form.reset("category");
+
+    form.category = data.id;
 };
 </script>
 
@@ -188,7 +190,7 @@ const handleCategoryCreated = () => {
         <template #content>
             <CreateCategoryForm
                 :should-redirect="false"
-                @created="handleCategoryCreated"
+                @created="handleCategoryCreated($event)"
             />
         </template>
 
